@@ -258,6 +258,10 @@
                 </div>
                 <!-- Contact Form -->
                 <form id="contact-form" class="space-y-4">
+                    <input type="hidden" name="access_key" value="172c7182-5c38-47f9-96a6-e5d336ddacd9">
+                    <input type="hidden" name="subject" value="New Contact from Portfolio Website">
+                    <input type="hidden" name="from_name" value="Portfolio Website">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display:none">
                     <div>
                         <label for="name" class="block text-sm text-gray-400 mb-1">Name</label>
                         <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-white placeholder-gray-500" placeholder="Your name">
@@ -394,25 +398,16 @@
             btn.disabled = true;
             status.classList.add('hidden');
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
             try {
+                const formData = new FormData(e.target);
+                formData.append('replyto', formData.get('email'));
+
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
-                        access_key: '172c7182-5c38-47f9-96a6-e5d336ddacd9',
-                        name: name,
-                        email: email,
-                        message: message,
-                        subject: 'Portfolio Contact from ' + name,
-                        from_name: 'Portfolio Website'
-                    })
+                    body: formData
                 });
 
                 const result = await response.json();
