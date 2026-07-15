@@ -1,5 +1,8 @@
 {
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": null,
   "rewrites": [
-    { "source": "/api/contact", "destination": "/api/contact" }
+    { "source": "/((?!api/).*)", "destination": "/$1" }
   ]
 }
